@@ -9,7 +9,11 @@ You should add an instruction how this project is to be used, installed, run, ed
  
 #### Project Intro/Objective
 
-The main purpose of this project is ________. Describe the goals of the project and potential impacts. Mention the needs/applications of your project clearly. Limit to one/two short paragraph(s). 
+The main purpose of this project is to build an autonomous Investment Research Agent that:
+1. Plans its research steps for a given stock symbol.
+2. Uses tools dynamically (APIs, datasets, retrieval).
+3. Self-reflects to assess the quality of its output.
+4. Learns across runs (e.g., keeps brief memories or notes to improve future analyses).
 
 #### Partner(s)/Contributor(s)
 
