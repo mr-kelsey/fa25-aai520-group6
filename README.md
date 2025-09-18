@@ -2,7 +2,7 @@
 
 This project is a part of the AAI-520 course in the Applied Artificial Intelligence Program at the University of San Diego (USD).
 
--- Project Status: [**Planned**, Active, On-hold, Completed]
+-- Project Status: [Planned, **Active**, On-hold, Completed]
 
 #### Installation
 You should add an instruction how this project is to be used, installed, run, edited in others’ machine.
@@ -20,9 +20,7 @@ The main purpose of this project is to build an autonomous Investment Research A
 * Johnathan Kelsey
 * [https://github.com/mr-kelsey](https://github.com/mr-kelsey)
 * Tadhbir Singh
-* Tadhbir_github_account 
-* Tanya Neustice
-* Tanya_github_account
+* [https://github.com/gHOSTSINGHAH](https://github.com/gHOSTSINGHAH)
 
 #### Methods Used
 * Inferential Statistics
