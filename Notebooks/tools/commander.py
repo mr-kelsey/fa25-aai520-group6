@@ -3,7 +3,7 @@ from sys import modules
 
 from .utils import get_tool_names
 
-""" Assigned: J
+""" Author: Johnathan Kelsey
 Mission: Synthesize all agent outputs and deliver final classification.
 Models Used:
     Weighted Ensemble Formula
