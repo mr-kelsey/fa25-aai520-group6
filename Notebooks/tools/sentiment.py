@@ -128,7 +128,7 @@ def calculate_sentiment_score(api_key:str, query:str, timeframe:str = "30d") -> 
     """Calculate a sentiment score from news articles related to the financial instrument in question.
 
     Args:
-        api_key (str): NewsAPI key used to pulls articles from NewsAPI.
+        api_key (str): NewsAPI key used to pull articles from NewsAPI.
         query (str): The keyword(s) used to query NewsAPI.
         timeframe (str): Time period to look back - default: 30 days.
 
