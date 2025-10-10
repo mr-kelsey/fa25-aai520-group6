@@ -26,10 +26,9 @@ assert BUY_THRESHOLD >= HOLD_THRESHOLD, "Buy threshold must be at least as large
 def calculate_final_score(performance_score, risk_score, sentiment_score, impact_score):
     return (0.4 * performance_score) + (0.2 * risk_score) + (0.3 * sentiment_score) + (0.1 * impact_score)
 
-# define tools here
 @tool
 def make_reccomendation(performance_score:float, risk_score:float, sentiment_score:float, impact_score:float) -> str:
-    """ Dummy tool to show required format for tool use
+    """Determine a final recommendation based on the input from the team.
 
     Args:
         performance_score (float): The performance score as calculated by Performance.

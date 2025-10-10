@@ -124,11 +124,11 @@ def calculate_sentiment_scores(dataframe, pipe):
     return combined_score
 
 @tool
-def calculate_sentiment_score(api_key:str, query:str, timeframe:str = "30d") -> float:
+def calculate_sentiment_score(news_api_key:str, query:str, timeframe:str = "30d") -> float:
     """Calculate a sentiment score from news articles related to the financial instrument in question.
 
     Args:
-        api_key (str): NewsAPI key used to pull articles from NewsAPI.
+        news_api_key (str): NewsAPI key used to pull articles from NewsAPI.
         query (str): The keyword(s) used to query NewsAPI.
         timeframe (str): Time period to look back - default: 30 days.
 
@@ -137,7 +137,7 @@ def calculate_sentiment_score(api_key:str, query:str, timeframe:str = "30d") -> 
     """
     pipe = pipeline("text-classification", model="ProsusAI/finbert", max_length=512, truncation=True)
     try:
-        news_df = call_news_api(api_key, query, timeframe)
+        news_df = call_news_api(news_api_key, query, timeframe)
         scores_df = news_df.apply(lambda df: calculate_sentiment_scores(df, pipe), axis=1)
         return (scores_df.sum() / len(scores_df)).item()
 

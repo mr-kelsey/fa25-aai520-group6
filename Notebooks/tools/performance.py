@@ -79,11 +79,11 @@ def calculate_armia_score(api_key, instrument):
     return min(max((expected_price - actual_price) / 100, 0), 1)
 
 @tool
-def calculate_performance_score(api_key:str, instrument:str) -> float:
+def calculate_performance_score(alpha_api_key:str, instrument:str) -> float:
     """Calculate a performance score based on the model prediction of future financial instrument movement.
     
     Args:
-        api_key (str): Alpha Vantage API key used to pull SMA and timeseries data.
+        alpha_api_key (str): Alpha Vantage API key used to pull SMA and timeseries data.
         instrument (str): The financial instrument of interest.
     
     Returns:
@@ -91,8 +91,8 @@ def calculate_performance_score(api_key:str, instrument:str) -> float:
     """
     history = [ticker_history(instrument, period) for period in ["1y", "3y", "5y"]]
     combined_regression_score = calculate_linear_regression_scores(history)
-    combined_sma_score = calculate_sma_scores(api_key, instrument)
-    arima_score = calculate_armia_score(api_key, instrument)
+    combined_sma_score = calculate_sma_scores(alpha_api_key, instrument)
+    arima_score = calculate_armia_score(alpha_api_key, instrument)
     value_score = arima_score * combined_sma_score
 
     return (value_score * VALUE_WEIGHT + combined_regression_score * REGRESSION_WEIGHT) / (VALUE_WEIGHT + REGRESSION_WEIGHT)
