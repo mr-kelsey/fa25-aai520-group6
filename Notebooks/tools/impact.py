@@ -1,9 +1,10 @@
+from numpy import random
 from smolagents import tool
 from sys import modules
 
 from .utils import get_tool_names
 
-""" Assigned: T
+""" Author: Tadhbir Singh
 Mission: Evaluate sustainability, innovation, and ethical governance.
 Models Used:
     TF-IDF + Logistic Regression - to extract and classify ESG mentions.
@@ -15,18 +16,18 @@ Techniques:
 Output: Impact Score (0-100)
 """
 
-# define tools here
 @tool
-def echo_tool(dummy:str) -> str:
-    """ Dummy tool to show required format for tool use
+def calculate_impact_score(symbol:str) -> float:
+    """Calculate an impact score based on simulation.
 
     Args:
-        dummy (str): dummy string to show
+        symbol (str): Financial instrument symbol in question.
 
     Returns:
-        String: returns the same string you passed in
+        Float: The impact score.
     """
-    return dummy
+    return random.random()
+
 
 # Map tools for easy export
 self = modules[__name__]

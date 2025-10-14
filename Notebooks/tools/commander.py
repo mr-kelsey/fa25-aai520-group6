@@ -19,12 +19,16 @@ Output: Preliminary Verdict (Buy / Hold / Avoid)
 """
 
 # Hyperparameters
-BUY_THRESHOLD = 0.7
-HOLD_THRESHOLD = 0.4
+PERFORMANCE_WEIGHT = 0.9
+SENTIMENT_WEIGHT = 0.7
+RISK_WEIGHT = 0.5
+IMPACT_WEIGHT = 0.25
+BUY_THRESHOLD = 0.55
+HOLD_THRESHOLD = 0.5
 assert BUY_THRESHOLD >= HOLD_THRESHOLD, "Buy threshold must be at least as large as hold threshold"
 
 def calculate_final_score(performance_score, risk_score, sentiment_score, impact_score):
-    return (0.4 * performance_score) + (0.2 * risk_score) + (0.3 * sentiment_score) + (0.1 * impact_score)
+    return (performance_score * PERFORMANCE_WEIGHT) - (risk_score * RISK_WEIGHT) + (sentiment_score * SENTIMENT_WEIGHT) + (impact_score * IMPACT_WEIGHT)
 
 # define tools here
 @tool
