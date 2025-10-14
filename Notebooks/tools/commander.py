@@ -3,7 +3,7 @@ from sys import modules
 
 from .utils import get_tool_names
 
-""" Assigned: J
+""" Author: Johnathan Kelsey
 Mission: Synthesize all agent outputs and deliver final classification.
 Models Used:
     Weighted Ensemble Formula
@@ -30,10 +30,9 @@ assert BUY_THRESHOLD >= HOLD_THRESHOLD, "Buy threshold must be at least as large
 def calculate_final_score(performance_score, risk_score, sentiment_score, impact_score):
     return (performance_score * PERFORMANCE_WEIGHT) - (risk_score * RISK_WEIGHT) + (sentiment_score * SENTIMENT_WEIGHT) + (impact_score * IMPACT_WEIGHT)
 
-# define tools here
 @tool
 def make_reccomendation(performance_score:float, risk_score:float, sentiment_score:float, impact_score:float) -> str:
-    """ Dummy tool to show required format for tool use
+    """Determine a final recommendation based on the input from the team.
 
     Args:
         performance_score (float): The performance score as calculated by Performance.

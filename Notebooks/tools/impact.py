@@ -13,7 +13,7 @@ Tools & Libraries:
     requests, scikit-learn, pandas
 Techniques:
     Text mining, keyword extraction, and environmental/social/governance scoring from company reports and articles.
-Output: Impact Score (0-100)
+Output: Impact Score (0-1)
 """
 
 @tool
