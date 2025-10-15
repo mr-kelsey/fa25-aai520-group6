@@ -1,9 +1,10 @@
 from sys import modules
 from smolagents import tool
+from yfinance import download
 
 from .utils import get_tool_names
 
-""" Assigned: T
+""" Author: Tadhbir Singh
 Mission: Measure risk, volatility, and downside probability.
 Models Used:
     Monte Carlo Simulation - simulates potential price paths to estimate volatility.
@@ -16,18 +17,21 @@ Techniques:
 Output: Risk Score (lower = safer)
 """
 
-# define tools here
 @tool
-def echo_tool(dummy:str) -> str:
-    """ Dummy tool to show required format for tool use
+def calculate_risk(symbol:str) -> float:
+    """Calculate a risk score based on downside deviation.
 
     Args:
-        dummy (str): dummy string to show
+        symbol (str): Financial instrument symbol in question.
 
     Returns:
-        String: returns the same string you passed in
+        Float: The risk score.
     """
-    return dummy
+    data = download(symbol, period="1y", progress=False)
+    data["Return"] = data["Close"].pct_change()
+    downside = data[data["Return"] < 0]["Return"]
+    risk_score = abs(downside.mean()) if not downside.empty else 0
+    return min(round(risk_score.item(), 3), 1)
 
 # Map tools for easy export
 self = modules[__name__]

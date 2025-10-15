@@ -6,3 +6,6 @@ class NewsResponseError(Exception):
 
 class TimeFrameError(Exception):
     pass
+
+class RecommendationError(Exception):
+    pass

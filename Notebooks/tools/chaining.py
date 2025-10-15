@@ -1,7 +1,11 @@
+import pandas as pd
+
 from bs4 import BeautifulSoup
+from transformers import pipeline
 from requests import get
 from smolagents import tool
 from sys import modules
+from textwrap import dedent
 from yfinance import Search
 
 from .utils import get_tool_names
@@ -54,23 +58,75 @@ def preprocess(urls:list[str]) -> list[str]:
     return full_articles
 
 
-# @tool
-# def classify():
-#     bert_df = pd.DataFrame(pipe(article))
-#     sentiment = bert_df.label.value_counts().nlargest(1).index[0]
-#     if sentiment == "positive":
-#         return 1
-#     if sentiment == "neutral":
-#         return 0
-#     return -1
+@tool
+def classify(articles: list[str]) -> list[int]:
+    """Classify the sentiment of each article using BERT.
 
-# @tool
-# def extract():
-#     pass
+    Args:
+        articles (list[str]): A list of articles to clasify.
 
-# @tool
-# def summarize():
-#     pass
+    Returns:
+        List(Integer): A list of integers indicating the sentiment of each article.
+    """
+    pipe = pipeline("text-classification", model="ProsusAI/finbert", max_length=512, truncation=True)
+
+    sentiment_scores = []
+    for article in articles:
+        bert_df = pd.DataFrame(pipe(article))
+        sentiment = bert_df.label.value_counts().nlargest(1).index[0]
+        if sentiment == "positive":
+            sentiment_scores.append(1)
+        elif sentiment == "neutral":
+            sentiment_scores.append(0)
+        else:
+            sentiment_scores.append(-1)
+
+    return sentiment_scores
+    
+
+@tool
+def extract(sentiment_scores: list[int]) -> dict:
+    """Calculate a set of statistics based on the provided sentiment scores.
+
+    Args:
+        sentiment_scores (list[int]): A list of sentiment scores.
+
+    Returns:
+        Dictionary: A dictionary of specific statistics
+    """
+    return {
+        "qty": len(sentiment_scores),
+        "pos": sentiment_scores.count(1),
+        "tral": sentiment_scores.count(0),
+        "neg": sentiment_scores.count(-1),
+    }
+
+@tool
+def summarize(stats:dict) -> str:
+    """Summarize the statistics provided
+
+    Args:
+        stats (dict): A dictionary of statistics
+
+    Returns:
+        String: The final output string summarizing the statistics
+    """
+    qty, pos, tral, neg = stats.values()
+    score = (pos - neg) / qty
+    if score < 0:
+        sentiment = "strongly " if score < -0.5 else "slightly "
+        sentiment += "negative"
+    elif score > 0:
+        sentiment = "strongly " if score > 0.5 else "slightly "
+        sentiment += "positive"
+    else:
+        sentiment = "neutral"
+
+    return dedent(f"""
+                  Of the {qty} articles reviwed, {pos / qty}% were positive, {neg / qty}% were negative, and {tral / qty}% were neutral.
+                  The overall sentiment score as calculated by reviewing these articles is {score}. This indicates that the overall sentiment
+                  about this financial instrument is {sentiment}.
+                  """)
 
 # Map tools for easy export
 self = modules[__name__]
